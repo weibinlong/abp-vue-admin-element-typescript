@@ -21,17 +21,17 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the jobsteps:
-    steps:
-      - uses: actions/checkout@v2
-      # Authenticates packages to push to GPR
-      - uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0' # SDK Version to use.
-          source-url: https://nuget.pkg.github.com/weibinlong/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.NugetKey}}
-      - run: dotnet build LINGYUN.Abp.Account.Application.Contracts
-      - name: Create the package
-        run: dotnet pack --configuration Release LINGYUN.Abp.Account.Application.Contracts
-      - name: Publish the package to GPR
-        run: dotnet nuget push LINGYUN.Abp.Account.Application.Contracts/bin/Release/*.nupkg
+    - uses: actions/checkout@v2
+    # Authenticates packages to push to GPR
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0' # SDK Version to use.
+        source-url: https://nuget.pkg.github.com/weibinlong/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.NugetKey}}
+    - run: dotnet build LINGYUN.Abp.Account.Application.Contracts.csproj
+    - name: Create the package
+      run: dotnet pack --configuration Release LINGYUN.Abp.Account.Application.Contracts.csproj
+     - name: Publish the package to GPR
+      run: dotnet nuget push LINGYUN.Abp.Account.Application.Contracts/bin/Release/*.nupkg
+
